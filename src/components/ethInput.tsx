@@ -6,9 +6,9 @@ export const EthInput: React.FC<IInputProps> = ({
 }) => {
 
     return (
-        <div className="p-2 space-x-4 bg-[#EFEFEF] rounded-sm inline-flex shadow">
+        <div className="p-2 space-x-4 bg-cultured-dark rounded-sm inline-flex shadow">
             <div>
-                <input min="0" type="number" className="bg-transparent outline-none" onChange={onChange} value={value} placeholder={"0"}/>
+                <input min="0" type="number" className="bg-cultured-dark outline-none" onChange={onChange} value={value} placeholder={"0"}/>
             </div>
             <div>
                 eth

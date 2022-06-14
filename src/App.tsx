@@ -24,7 +24,7 @@ function App() {
   const [modal, setModal] = useState(false);
 
   return (
-    <div className='font-offside bg-[#F5F5F5] relative'>
+    <div className='font-offside bg-cultured relative'>
       <div className={`absolute overflow-y-auto top-0 left-0 sm:top-[15%] sm:left-[15%] 2xl:left-[25%] bg-gray-800 text-white w-full h-full sm:w-3/4 sm:h-3/4 2xl:w-2/4 2xl:h-3/4 shadow-2xl border-4 border-white ${modal ? "" : "hidden"}`}>
         <FAQ onClose={() => setModal(false)} />
       </div>
@@ -47,7 +47,7 @@ function App() {
           <Form />
         </main>
         <footer className='p-10 text-center'>
-          *everyone can tip or take from this tipJAR. <br/> <a className='asd text-green-400 font-bold' href="https://en.wikipedia.org/wiki/With_great_power_comes_great_responsibility" target="_blank">With great power comes great responsibility.</a>
+          *everyone can tip or take from this tipJAR. <br/> <a className='text-green-400 font-bold' rel="noreferrer" href="https://en.wikipedia.org/wiki/With_great_power_comes_great_responsibility" target="_blank">With great power comes great responsibility.</a>
         </footer>
       </div>
     </div>

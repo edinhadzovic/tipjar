@@ -21,10 +21,10 @@ export const Button: React.FC<IButtonProps> =
         let className = "";
         switch(type) {
             case "danger":
-                className += "bg-red-600";
+                className += "bg-rosso hover:bg-rosso-light";
                 break;
             default:
-                className += "bg-gray-800";
+                className += "bg-dark-jungle hover:bg-dark-jungle-light";
         }
 
         if (rounded) {
@@ -37,7 +37,7 @@ export const Button: React.FC<IButtonProps> =
     }
 
     return (
-        <button className={`flex flex-row justify-center items-center text-gray-200 space-x-4 shadow-sm min-w-[40px] min-h-[40px] ${getClass(type, rounded)}`} onClick={onClick}>
+        <button className={`flex flex-row justify-center items-center text-cultured space-x-4 shadow-sm min-w-[40px] min-h-[40px] ${getClass(type, rounded)}`} onClick={onClick}>
             {icon && <div>{icon}</div> }
             <div>{children}</div>
         </button>
