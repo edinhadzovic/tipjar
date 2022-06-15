@@ -1,19 +1,22 @@
 import React, { useState } from 'react';
-import { Button, EthInput } from './components';
+import { Button, Connector, EthInput } from './components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faMinus, faQuestion } from '@fortawesome/free-solid-svg-icons';
 import { FAQ } from './components/faq';
+import { useConntectorContext } from './context/connectorContext';
 
 const Form = () => {
+  const {connected} = useConntectorContext();
+
   return (
     <div className='space-y-8 text-center'>
       <div>
         <EthInput />
       </div>
       <div className='flex space-x-4 items-center justify-center'>
-        <Button icon={<FontAwesomeIcon icon={faPlus} />} onClick={() => console.log("todo")}>Tip</Button>
+        <Button disabled={!connected} icon={<FontAwesomeIcon icon={faPlus} />} onClick={() => console.log("todo")}>Tip</Button>
         <div>or</div>
-        <Button icon={<FontAwesomeIcon icon={faMinus} />} type="danger" onClick={() => console.log("todo")}>Take</Button>
+        <Button disabled={!connected} icon={<FontAwesomeIcon icon={faMinus} />} type="danger" onClick={() => console.log("todo")}>Take</Button>
       </div>
     </div>
   );
@@ -29,10 +32,15 @@ function App() {
         <FAQ onClose={() => setModal(false)} />
       </div>
       <div className='container mx-auto min-h-screen justify-between flex flex-col'>
-        <header className='flex py-4 px-4'>
-          <div className='w-3/4 pt-2'><h1 className='text-xl'>tipJAR</h1></div>
-          <div className='w-1/4 flex flex-col justify-center items-end'>
-              <Button rounded onClick={() => setModal(true)}><FontAwesomeIcon icon={faQuestion} /></Button>
+        <header className='flex py-4 px-4 justify-between'>
+          <div className='pt-2'><h1 className='text-xl'>tipJAR</h1></div>
+          <div className='flex justify-center items-end space-x-4'>
+              <div>
+                <Connector />
+              </div>
+              <div>
+                <Button rounded onClick={() => setModal(true)}><FontAwesomeIcon icon={faQuestion} /></Button>
+              </div>
           </div>
         </header>
         <main className='w-full sm:w-1/2 mx-auto space-y-8'>

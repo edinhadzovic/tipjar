@@ -6,6 +6,7 @@ interface IButtonProps {
     icon?: any;
     type?: ButtonType
     rounded?: boolean
+    disabled?: boolean
 }
 
 export const Button: React.FC<IButtonProps> = 
@@ -14,7 +15,8 @@ export const Button: React.FC<IButtonProps> =
         onClick,
         icon,
         type = "normal",
-        rounded = false
+        rounded = false,
+        disabled = false,
     }) => {
 
     const getClass = (type: ButtonType, rounded: boolean) => {
@@ -30,14 +32,14 @@ export const Button: React.FC<IButtonProps> =
         if (rounded) {
             className += " rounded-full";
         } else {
-            className += " w-[120px] rounded"
+            className += " px-5 rounded"
         }
 
         return className;
     }
 
     return (
-        <button className={`flex flex-row justify-center items-center text-cultured space-x-4 shadow-sm min-w-[40px] min-h-[40px] ${getClass(type, rounded)}`} onClick={onClick}>
+        <button disabled={disabled} className={`flex flex-row justify-center disabled:bg-cultured-dark disabled:text-dark-jungle-light items-center text-cultured space-x-4 shadow-sm min-w-[40px] min-h-[40px] ${getClass(type, rounded)}`} onClick={onClick}>
             {icon && <div>{icon}</div> }
             <div>{children}</div>
         </button>
