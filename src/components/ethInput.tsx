@@ -1,12 +1,15 @@
-interface IInputProps extends React.InputHTMLAttributes<HTMLInputElement> {}
+interface IInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
+    hasError?: boolean
+}
 
 export const EthInput: React.FC<IInputProps> = ({
     onChange,
-    value
+    value,
+    hasError = false
 }) => {
 
     return (
-        <div className="p-2 space-x-4 bg-cultured-dark rounded-sm inline-flex shadow">
+        <div className={`p-2 space-x-4 bg-cultured-dark rounded-sm inline-flex shadow ${hasError && "animate-wiggle" }`}>
             <div>
                 <input min="0" type="number" className="bg-cultured-dark outline-none" onChange={onChange} value={value} placeholder={"0"}/>
             </div>

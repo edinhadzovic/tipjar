@@ -1,10 +1,10 @@
 type ButtonType = "normal" | "danger";
 
-interface IButtonProps {
+interface IButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
     children: React.ReactNode
     onClick: () => void;
     icon?: any;
-    type?: ButtonType
+    art?: ButtonType
     rounded?: boolean
     disabled?: boolean
 }
@@ -14,14 +14,14 @@ export const Button: React.FC<IButtonProps> =
         children,
         onClick,
         icon,
-        type = "normal",
+        art = "normal",
         rounded = false,
         disabled = false,
     }) => {
 
-    const getClass = (type: ButtonType, rounded: boolean) => {
+    const getClass = (art: ButtonType, rounded: boolean) => {
         let className = "";
-        switch(type) {
+        switch(art) {
             case "danger":
                 className += "bg-rosso hover:bg-rosso-light";
                 break;
@@ -39,7 +39,7 @@ export const Button: React.FC<IButtonProps> =
     }
 
     return (
-        <button disabled={disabled} className={`flex flex-row justify-center disabled:bg-cultured-dark disabled:text-dark-jungle-light items-center text-cultured space-x-4 shadow-sm min-w-[40px] min-h-[40px] ${getClass(type, rounded)}`} onClick={onClick}>
+        <button disabled={disabled} className={`flex flex-row justify-center disabled:bg-cultured-dark disabled:text-dark-jungle-light items-center text-cultured space-x-4 shadow-sm min-w-[40px] min-h-[40px] ${getClass(art, rounded)}`} onClick={onClick}>
             {icon && <div>{icon}</div> }
             <div>{children}</div>
         </button>

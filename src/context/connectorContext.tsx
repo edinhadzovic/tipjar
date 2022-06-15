@@ -1,12 +1,13 @@
 import { ethers } from "ethers";
 import { createContext, useContext, useState } from "react";
+import { TipJarContract } from "../service/TipJarContract";
 import { METHODS } from "../utils/ethereum";
 
 declare global {
     interface Window {
       ethereum: any
       provider: ethers.providers.Web3Provider | null
-      contract: any; // todo import own contract
+      contract: TipJarContract | null; // todo import own contract
     }
   }
 
@@ -26,6 +27,7 @@ export const ConnectorContextProvider: React.FC<IConnectorContextProps> = ({chil
     const [connected, setConnected] = useState<boolean>(false);
     const [account, setAccount] = useState<string>("");
     window.provider = window.ethereum ? new ethers.providers.Web3Provider(window.ethereum) : null
+    window.contract = window.provider ? new TipJarContract(window.provider): null;
 
     const connectWithWallet = async () => {
         if (!window.provider) return;
