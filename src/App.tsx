@@ -7,10 +7,13 @@ import { useConntectorContext } from './context/connectorContext';
 import { ethers } from 'ethers';
 import { TIP_JAR_CONTRACT_ADDRESS } from './constants/misc';
 
-const Form = () => {
+interface IFormProps {
+  fetchBalance: () => void;
+}
+
+const Form: React.FC<IFormProps> = ({fetchBalance}) => {
   const {connected, account} = useConntectorContext();
   const [eth, setEth] = useState<string>("");
-  const [isSubmited, setIsSubmited] = useState<boolean>(false);
   const [error, setError] = useState<boolean>(false);
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -25,8 +28,7 @@ const Form = () => {
     signer.sendTransaction({
       to: TIP_JAR_CONTRACT_ADDRESS,
       value: ethers.utils.parseEther(eth)
-    }).then((tx) => console.log(tx))
-      .catch(error => console.error(error))
+    }).then(() => fetchBalance());
   }
 
   const onTake = async () => {
@@ -45,9 +47,7 @@ const Form = () => {
     const signer = window.provider.getSigner(account);
     const signerContract = contract.connect(signer);
     await signerContract.takeOut(ethers.utils.parseEther(eth))
-    
-    return;
-
+    fetchBalance();
   }
 
   return (
@@ -75,12 +75,15 @@ const Form = () => {
 function App() {
   const [modal, setModal] = useState(false);
   const [balance, setBalance] = useState("");
+
+  const fetchContractBalance = () => {
+    if (!window.contract) return;
+    const { contract } = window.contract;
+    contract.balance().then((amount) => setBalance(ethers.utils.formatEther(amount))).catch(error => console.error(error));
+  }
  
   useEffect(() => {
-    if (window.contract) {
-      const { contract } = window.contract;
-      contract.balance().then((amount) => setBalance(ethers.utils.formatEther(amount))).catch(error => console.error(error));
-    }
+    fetchContractBalance();
   }, [])
 
   return (
@@ -100,7 +103,7 @@ function App() {
               </div>
           </div>
         </header>
-        <main className='w-full sm:w-1/2 mx-auto space-y-8'>
+        <main className='w-full xl:w-3/4 mx-auto space-y-8'>
           <div className='text-center'>
             <div className='text-[96px] hidden'>
               321000 USD
@@ -109,7 +112,7 @@ function App() {
               {balance} eth
             </div>
           </div>
-          <Form />
+          <Form fetchBalance={fetchContractBalance}/>
           <LiveEvents />
         </main>
         <footer className='p-10 text-center'>
