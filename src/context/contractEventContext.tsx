@@ -2,6 +2,7 @@ import { ethers } from "ethers";
 import { createContext, useContext, useEffect, useState } from "react";
 import { TIP_JAR_CONTRACT_EVENTS } from "../constants/misc";
 import { formatBigNumbersToEth, hashExist } from "../utils/helpers";
+import { useConntectorContext } from "./connectorContext";
 
 type EventType = "taken" | "tipped";
 
@@ -25,6 +26,7 @@ const ContractEventContext = createContext({} as IContractEventContextState);
 export const ContractEventContextProvider: React.FC<IContractEventContextProps> = 
     ({children}) => {
         const [events, setEvents] = useState<IEvent[]>([]);
+        const { fetchContractBalance } = useConntectorContext();
 
         const poplast = (arr: IEvent[]) => {
             if (arr.length === 5) {
@@ -51,7 +53,8 @@ export const ContractEventContextProvider: React.FC<IContractEventContextProps> 
     
                     setEvents(() => [newEvent, ...poplast(events)]);
                 }
-                
+
+                fetchContractBalance();
             })
 
             contract.on(TIP_JAR_CONTRACT_EVENTS.TIPPED, (address: string, amount: string, event: any) => {
@@ -68,6 +71,8 @@ export const ContractEventContextProvider: React.FC<IContractEventContextProps> 
     
                     setEvents(() => [newEvent, ...poplast(events)]);
                 }
+
+                fetchContractBalance();
             })
         })
 

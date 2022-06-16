@@ -1,5 +1,5 @@
 import { ethers } from "ethers";
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { TipJarContract } from "../service/TipJarContract";
 import { METHODS } from "../utils/ethereum";
 
@@ -18,7 +18,9 @@ interface IConnectorContextProps {
 interface IConnectorContextState {
     connected: boolean,
     account: string,
+    balance: string,
     connectWithWallet: () => Promise<void>;
+    fetchContractBalance: () => void;
 }
 
 const ConnectorContext = createContext({} as IConnectorContextState);
@@ -26,6 +28,7 @@ const ConnectorContext = createContext({} as IConnectorContextState);
 export const ConnectorContextProvider: React.FC<IConnectorContextProps> = ({children}) => {
     const [connected, setConnected] = useState<boolean>(false);
     const [account, setAccount] = useState<string>("");
+    const [balance, setBalance] = useState<string>("0");
     window.provider = window.ethereum ? new ethers.providers.Web3Provider(window.ethereum) : null
     window.contract = window.provider ? new TipJarContract(window.provider): null;
 
@@ -37,8 +40,18 @@ export const ConnectorContextProvider: React.FC<IConnectorContextProps> = ({chil
         setConnected(true);
     }
 
+    const fetchContractBalance = () => {
+        if (!window.contract) return;
+        const { contract } = window.contract;
+        contract.balance().then((amount) => setBalance(ethers.utils.formatEther(amount))).catch(error => console.error(error));
+    }
+
+    useEffect(() => {
+        fetchContractBalance();
+      }, [])
+
     return (
-        <ConnectorContext.Provider value={{connected, account, connectWithWallet}}>
+        <ConnectorContext.Provider value={{connected, account, balance, fetchContractBalance, connectWithWallet}}>
             {children}
         </ConnectorContext.Provider>
     );

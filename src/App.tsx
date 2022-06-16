@@ -7,12 +7,10 @@ import { useConntectorContext } from './context/connectorContext';
 import { ethers } from 'ethers';
 import { TIP_JAR_CONTRACT_ADDRESS } from './constants/misc';
 
-interface IFormProps {
-  fetchBalance: () => void;
-}
+interface IFormProps {}
 
-const Form: React.FC<IFormProps> = ({fetchBalance}) => {
-  const {connected, account} = useConntectorContext();
+const Form: React.FC<IFormProps> = () => {
+  const {connected, account, fetchContractBalance} = useConntectorContext();
   const [eth, setEth] = useState<string>("");
   const [error, setError] = useState<boolean>(false);
 
@@ -28,7 +26,7 @@ const Form: React.FC<IFormProps> = ({fetchBalance}) => {
     signer.sendTransaction({
       to: TIP_JAR_CONTRACT_ADDRESS,
       value: ethers.utils.parseEther(eth)
-    }).then(() => fetchBalance());
+    }).then(() => fetchContractBalance());
   }
 
   const onTake = async () => {
@@ -47,7 +45,7 @@ const Form: React.FC<IFormProps> = ({fetchBalance}) => {
     const signer = window.provider.getSigner(account);
     const signerContract = contract.connect(signer);
     await signerContract.takeOut(ethers.utils.parseEther(eth))
-    fetchBalance();
+    fetchContractBalance();
   }
 
   return (
@@ -73,18 +71,8 @@ const Form: React.FC<IFormProps> = ({fetchBalance}) => {
 
 
 function App() {
+  const {balance} = useConntectorContext();
   const [modal, setModal] = useState(false);
-  const [balance, setBalance] = useState("");
-
-  const fetchContractBalance = () => {
-    if (!window.contract) return;
-    const { contract } = window.contract;
-    contract.balance().then((amount) => setBalance(ethers.utils.formatEther(amount))).catch(error => console.error(error));
-  }
- 
-  useEffect(() => {
-    fetchContractBalance();
-  }, [])
 
   return (
     <div className='font-offside bg-cultured relative'>
@@ -112,7 +100,7 @@ function App() {
               {balance} eth
             </div>
           </div>
-          <Form fetchBalance={fetchContractBalance}/>
+          <Form />
           <LiveEvents />
         </main>
         <footer className='p-10 text-center'>
