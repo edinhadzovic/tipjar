@@ -63,7 +63,7 @@ const Form: React.FC<IFormProps> = () => {
           disabled={!connected} 
           icon={<FontAwesomeIcon icon={faMinus} />} 
           art="danger" 
-          onClick={onTake}>Take</Button>
+          onClick={onTake}>Borrow</Button>
       </div>
     </div>
   );

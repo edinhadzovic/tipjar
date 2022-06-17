@@ -35,7 +35,7 @@ export const LiveEvents: React.FC<ILiveEventsProps> = () => {
                         </div>
                     </div>
                     
-                    <div className="flex-1 flex flex-col items-end">
+                    <div className="flex-1 flex flex-col sm:items-end">
                         <div className="text-sm font-bold">amount</div>
                         <div>{event.amount} eth</div>
                     </div>
