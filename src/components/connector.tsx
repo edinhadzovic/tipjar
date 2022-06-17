@@ -9,7 +9,7 @@ export const Connector: React.FC<IConnectorProps> = (props) => {
 
     return (
         <Button disabled={!window.provider} onClick={connectWithWallet}>
-            {!window.provider ? "Install Metamask" : (account && connected) ? formatAddress(account) : "Connect Metamask"}
+            <div className="text-xs sm:text-base">{!window.provider ? "Install Metamask" : (account && connected) ? formatAddress(account) : "Connect Metamask"}</div>
         </Button>
     );
 }

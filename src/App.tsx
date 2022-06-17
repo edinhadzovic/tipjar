@@ -81,7 +81,12 @@ function App() {
       </div>
       <div className='container mx-auto min-h-screen justify-between flex flex-col'>
         <header className='flex py-4 px-4 justify-between'>
-          <div className='pt-2'><h1 className='text-xl'>tipJAR</h1></div>
+          <div className='pt-2 flex items-center space-x-2'>
+            <a href='https://www.planbdao.com/'>
+              <img className='w-10 h-10' src='./img/PlanBLogo.png' alt='PlanB DAO logo'/>
+            </a>
+            <h1 className='text-sm sm:text-xl'>tipJAR</h1>
+          </div>
           <div className='flex justify-center items-end space-x-4'>
               <div>
                 <Connector />
