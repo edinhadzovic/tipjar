@@ -5,7 +5,7 @@ import { faPlus, faMinus, faQuestion } from '@fortawesome/free-solid-svg-icons';
 import { FAQ } from './components/faq';
 import { useConntectorContext } from './context/connectorContext';
 import { ethers } from 'ethers';
-import { TIP_JAR_CONTRACT_ADDRESS } from './constants/misc';
+import { TIP_JAR_CONTRACT_ADDRESS_MAIN_NET } from './constants/misc';
 
 interface IFormProps {}
 
@@ -24,7 +24,7 @@ const Form: React.FC<IFormProps> = () => {
     const signer = window.provider.getSigner(account);
 
     signer.sendTransaction({
-      to: TIP_JAR_CONTRACT_ADDRESS,
+      to: TIP_JAR_CONTRACT_ADDRESS_MAIN_NET,
       value: ethers.utils.parseEther(eth)
     }).then(() => fetchContractBalance());
   }
@@ -35,7 +35,7 @@ const Form: React.FC<IFormProps> = () => {
     setError(false);
     const { contract } = window.contract;
 
-    const max = await contract.getTakeValue();
+    const max = await contract.getMaxBorrowAmount();
 
     if (+eth > +ethers.utils.formatEther(max)) {
       setError(true);
