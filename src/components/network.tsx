@@ -38,7 +38,7 @@ export const Network: React.FC<INetworkProps> = () => {
     })
 
     return (
-        <div className="px-4 py-2 border-2 border-cultured-dark shadow inline-flex items-center space-x-2 rounded text-xs">
+        <div className="px-4 py-2 inline-flex items-center space-x-2 rounded text-xs">
             <div className={NETWORK_CIRCLE[id]}></div><div>{NETWORK_NAME[id]}</div>
         </div>
     );
