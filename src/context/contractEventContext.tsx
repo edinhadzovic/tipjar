@@ -28,15 +28,6 @@ export const ContractEventContextProvider: React.FC<IContractEventContextProps> 
         const [events, setEvents] = useState<IEvent[]>([]);
         const { fetchContractBalance } = useConntectorContext();
 
-        const poplast = (arr: IEvent[]) => {
-            if (arr.length === 5) {
-                arr.pop()
-                return arr;
-            }
-
-            return arr;
-        } 
-
         useEffect(() => {
             if (!window.contract) return;
             const { contract } = window.contract;
@@ -51,7 +42,7 @@ export const ContractEventContextProvider: React.FC<IContractEventContextProps> 
                         amount: formatBigNumbersToEth(amount, ethers)
                     }
     
-                    setEvents(() => [newEvent, ...poplast(events)]);
+                    setEvents(() => [newEvent, ...events]);
                 }
 
                 fetchContractBalance();
@@ -69,7 +60,7 @@ export const ContractEventContextProvider: React.FC<IContractEventContextProps> 
                         amount: formatBigNumbersToEth(amount, ethers)
                     }
     
-                    setEvents(() => [newEvent, ...poplast(events)]);
+                    setEvents(() => [newEvent, ...events]);
                 }
 
                 fetchContractBalance();
