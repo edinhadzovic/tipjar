@@ -6,6 +6,7 @@ import { FAQ } from './components/faq';
 import { useConntectorContext } from './context/connectorContext';
 import { ethers } from 'ethers';
 import { getContractAddress } from './constants/misc';
+import { Network } from './components/network';
 
 interface IFormProps {}
 
@@ -97,6 +98,9 @@ function App() {
           </div>
         </header>
         <main className='w-full xl:w-3/4 mx-auto space-y-8'>
+          <div className='text-center'>
+            <Network />
+          </div>
           <div className='text-center'>
             <div className='text-[96px] hidden'>
               321000 USD
