@@ -35,6 +35,7 @@ export const TIP_JAR_CONTRACT_EVENTS_MAIN_NET = {
 }
 
 export const getContractAddress = () => process.env.NODE_ENV === "production" ? TIP_JAR_CONTRACT_ADDRESS_MAIN_NET : TIP_JAR_CONTRACT_ADDRESS;
+export const getContractAbi = () => process.env.NODE_ENV === "production" ? TIP_JAR_CONTRACT_ABI_MAIN_NET : TIP_JAR_CONTRACT_ABI;
 
 
 // [{"anonymous":false,"inputs":[{"indexed":false,"internalType":"address","name":"","type":"address"},{"indexed":false,"internalType":"uint256","name":"","type":"uint256"}],"name":"Taken","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"address","name":"","type":"address"},{"indexed":false,"internalType":"uint256","name":"","type":"uint256"}],"name":"Tipped","type":"event"},{"inputs":[],"name":"balance","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"getMaxBorrowAmount","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"_amount","type":"uint256"}],"name":"takeOut","outputs":[],"stateMutability":"payable","type":"function"},{"stateMutability":"payable","type":"receive"}]

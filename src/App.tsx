@@ -5,7 +5,7 @@ import { faPlus, faMinus, faQuestion } from '@fortawesome/free-solid-svg-icons';
 import { FAQ } from './components/faq';
 import { useConntectorContext } from './context/connectorContext';
 import { ethers } from 'ethers';
-import { getContractAddress, TIP_JAR_CONTRACT_ADDRESS_MAIN_NET } from './constants/misc';
+import { getContractAddress } from './constants/misc';
 
 interface IFormProps {}
 
@@ -13,8 +13,6 @@ const Form: React.FC<IFormProps> = () => {
   const {connected, account, fetchContractBalance} = useConntectorContext();
   const [eth, setEth] = useState<string>("");
   const [error, setError] = useState<boolean>(false);
-
-  console.log(getContractAddress());
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = +e.currentTarget.value < 0 ? "0" : e.currentTarget.value
@@ -26,7 +24,7 @@ const Form: React.FC<IFormProps> = () => {
     const signer = window.provider.getSigner(account);
 
     signer.sendTransaction({
-      to: TIP_JAR_CONTRACT_ADDRESS_MAIN_NET,
+      to: getContractAddress(),
       value: ethers.utils.parseEther(eth)
     }).then(() => fetchContractBalance());
   }
@@ -35,9 +33,9 @@ const Form: React.FC<IFormProps> = () => {
     if (!window.contract) return;
     if (!window.provider) return;
     setError(false);
-    const { contract } = window.contract;
+    const { contract, isProduction } = window.contract;
 
-    const max = await contract.getMaxBorrowAmount();
+    const max = isProduction ? await contract.getMaxBorrowAmount() : await contract.getTakeValue();
 
     if (+eth > +ethers.utils.formatEther(max)) {
       setError(true);
