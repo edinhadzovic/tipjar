@@ -7,6 +7,7 @@ import { useConntectorContext } from './context/connectorContext';
 import { ethers } from 'ethers';
 import { getContractAddress } from './constants/misc';
 import { Network } from './components/network';
+import { EtherscanLogoCircle } from './components/icons';
 
 interface IFormProps {}
 
@@ -100,8 +101,6 @@ function App() {
         <main className='w-full xl:w-3/4 mx-auto space-y-8'>
           <div className='text-center'>
             <Network />
-          </div>
-          <div className='text-center'>
             <div className='text-[96px] hidden'>
               321000 USD
             </div>
@@ -113,7 +112,14 @@ function App() {
           <LiveEvents />
         </main>
         <footer className='p-10 text-center'>
-          *everyone can tip or take from this tipJAR. <br/> <a className='text-green-400 font-bold' rel="noreferrer" href="https://en.wikipedia.org/wiki/With_great_power_comes_great_responsibility" target="_blank">With great power comes great responsibility.</a>
+          <div className='flex justify-center py-4'>
+            <a href="https://etherscan.io/address/0xafa6cfaa492360e0b7f5bf1a5840d4bd9a89618d">
+              <EtherscanLogoCircle />
+            </a>
+          </div>
+          <div>
+            *everyone can tip or take from this tipJAR. <br/> <a className='text-green-400 font-bold' rel="noreferrer" href="https://en.wikipedia.org/wiki/With_great_power_comes_great_responsibility" target="_blank">With great power comes great responsibility.</a>
+          </div>
         </footer>
       </div>
     </div>

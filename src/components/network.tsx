@@ -1,3 +1,4 @@
+import { ethers } from "ethers";
 import { useEffect, useState } from "react";
 import { setNetworkId } from "../utils/helpers";
 
@@ -22,6 +23,11 @@ const NETWORK_CIRCLE = {
 
 interface INetworkProps {}
 
+/**
+ * 
+ *  TODO: Logic should maybe be moved to the Main Context
+ */
+
 export const Network: React.FC<INetworkProps> = () => {
     const [id, setId] = useState<NETWORK>(NETWORK.UNKNOWN);
 
@@ -34,7 +40,13 @@ export const Network: React.FC<INetworkProps> = () => {
                   
             })
             .catch(error => console.error(error));
-            window.provider!.on("chainChanged", (args) => console.log(args)); 
+        
+        if (!window.ethereum) return;
+        
+        window.ethereum.on("chainChanged", (chainId: any) => {
+            setId(setNetworkId(Number(chainId)));
+            window.location.reload();
+        }); 
     })
 
     return (
