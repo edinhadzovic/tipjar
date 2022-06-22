@@ -1,4 +1,5 @@
 import { NETWORK } from "../components/network";
+import { ERROR_TYPE } from "../constants/errors";
 import { IEvent } from "../context/contractEventContext"
 
 export const formatAddress = (address: string) => 
@@ -18,5 +19,14 @@ export const setNetworkId = (id: number) => {
             return NETWORK.ROPSTEN;
         default:
             return NETWORK.UNKNOWN;
+    }
+}
+
+export const decodeError = (code: string) => {
+    switch(code) {
+        case "CALL_EXCEPTION":
+            return ERROR_TYPE.WRONG_NETWORK;
+        default:
+            return ERROR_TYPE.UNKNOWN_ERROR;
     }
 }

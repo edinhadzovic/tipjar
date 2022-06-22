@@ -5,6 +5,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { ConnectorContextProvider } from './context/connectorContext';
 import { ContractEventContextProvider } from './context/contractEventContext';
+import { NetworkContextProvider } from './context/networkContext';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -12,9 +13,11 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <ConnectorContextProvider>
-      <ContractEventContextProvider>
-        <App />
-      </ContractEventContextProvider>
+      <NetworkContextProvider>
+        <ContractEventContextProvider>
+          <App />
+        </ContractEventContextProvider>
+      </NetworkContextProvider>
     </ConnectorContextProvider>
   </React.StrictMode>
 );

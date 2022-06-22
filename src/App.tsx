@@ -8,13 +8,14 @@ import { ethers } from 'ethers';
 import { getContractAddress } from './constants/misc';
 import { Network } from './components/network';
 import { EtherscanLogoCircle } from './components/icons';
+import { ErrorMsg, ERROR_TYPE } from './constants/errors';
 
 interface IFormProps {}
 
 const Form: React.FC<IFormProps> = () => {
   const {connected, account, fetchContractBalance} = useConntectorContext();
   const [eth, setEth] = useState<string>("");
-  const [error, setError] = useState<boolean>(false);
+  const [error, setError] = useState<ERROR_TYPE>(ERROR_TYPE.NO_ERROR);
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = +e.currentTarget.value < 0 ? "0" : e.currentTarget.value
@@ -34,13 +35,13 @@ const Form: React.FC<IFormProps> = () => {
   const onTake = async () => {
     if (!window.contract) return;
     if (!window.provider) return;
-    setError(false);
+    setError(ERROR_TYPE.NO_ERROR);
     const { contract, isProduction } = window.contract;
 
     const max = isProduction ? await contract.getMaxBorrowAmount() : await contract.getTakeValue();
 
     if (+eth > +ethers.utils.formatEther(max)) {
-      setError(true);
+      setError(ERROR_TYPE.TOO_GREEDY);
       return;
     }
 
@@ -53,7 +54,7 @@ const Form: React.FC<IFormProps> = () => {
   return (
     <div className='space-y-8 text-center'>
       <div>
-        <EthInput hasError={error} value={eth} onChange={onChange} />
+        <EthInput hasError={error === ERROR_TYPE.TOO_GREEDY} value={eth} onChange={onChange} />
       </div>
       <div className='flex space-x-4 items-center justify-center'>
         <Button 
@@ -73,7 +74,7 @@ const Form: React.FC<IFormProps> = () => {
 
 
 function App() {
-  const {balance} = useConntectorContext();
+  const {balance, appError} = useConntectorContext();
   const [modal, setModal] = useState(false);
 
   return (
@@ -101,6 +102,9 @@ function App() {
         <main className='w-full xl:w-3/4 mx-auto space-y-8'>
           <div className='text-center'>
             <Network />
+            <div className={` w-1/2 mx-auto bg-rosso text-white px-4 py-2 shadow my-2 ${appError > ERROR_TYPE.NO_ERROR ? "animate-wiggle" : "hidden"}`}>
+                {ErrorMsg[appError]}
+            </div>
             <div className='text-[96px] hidden'>
               321000 USD
             </div>

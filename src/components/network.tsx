@@ -1,5 +1,4 @@
-import { useEffect, useState } from "react";
-import { setNetworkId } from "../utils/helpers";
+import { useNetworkContext } from "../context/networkContext";
 
 export enum NETWORK {
     UNKNOWN = 0,
@@ -22,35 +21,12 @@ const NETWORK_CIRCLE = {
 
 interface INetworkProps {}
 
-/**
- * 
- *  TODO: Logic should maybe be moved to the Main Context
- */
-
 export const Network: React.FC<INetworkProps> = () => {
-    const [id, setId] = useState<NETWORK>(NETWORK.UNKNOWN);
-
-    useEffect(() => {
-        if (!window.provider) return;
-
-        window.provider.getNetwork()
-            .then((network) => {
-                setId(setNetworkId(network.chainId));
-                  
-            })
-            .catch(error => console.error(error));
-        
-        if (!window.ethereum) return;
-        
-        window.ethereum.on("chainChanged", (chainId: any) => {
-            setId(setNetworkId(Number(chainId)));
-            window.location.reload();
-        }); 
-    })
+    const { network } = useNetworkContext();
 
     return (
         <div className="px-4 py-2 inline-flex items-center space-x-2 rounded text-xs">
-            <div className={NETWORK_CIRCLE[id]}></div><div>{NETWORK_NAME[id]}</div>
+            <div className={NETWORK_CIRCLE[network]}></div><div>{NETWORK_NAME[network]}</div>
         </div>
     );
 }
