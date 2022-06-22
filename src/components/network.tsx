@@ -1,4 +1,3 @@
-import { ethers } from "ethers";
 import { useEffect, useState } from "react";
 import { setNetworkId } from "../utils/helpers";
 

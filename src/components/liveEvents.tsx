@@ -32,7 +32,7 @@ export const LiveEvents: React.FC<ILiveEventsProps> = () => {
                                 <div className="">
                                     <div className="text-sm font-bold">etherscan</div>
                                     <div>
-                                        <a className="text-blue-600 hover:text-blue-500" href={`https://ropsten.etherscan.io/tx/${event.hash}`} target="_blank" rel="noreferrer">
+                                        <a className="text-blue-600 hover:text-blue-500" href={`https://etherscan.io/tx/${event.hash}`} target="_blank" rel="noreferrer">
                                             {formatAddress(event.hash)} <FontAwesomeIcon icon={faArrowUpRightFromSquare}/>
                                         </a>
                                     </div>
