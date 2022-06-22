@@ -14,7 +14,7 @@ export const LiveEvents: React.FC<ILiveEventsProps> = () => {
             <div className="flex">
                 live <div className="w-2 h-2 rounded-full bg-green-500 animate-ping"></div>
             </div>
-            {!events.length ?
+            {events.length ?
                 <div className="max-h-[300px] overflow-auto space-y-4">
                     {events.map((event) => (
                         <div
